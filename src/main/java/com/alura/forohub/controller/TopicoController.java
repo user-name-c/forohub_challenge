@@ -34,4 +34,10 @@ public class TopicoController {
         repository.save(topico);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detallarTopico(@PathVariable Long id) {
+        var topico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new ResponseTopicoDTO(topico));
+    }
+
 }
