@@ -35,6 +35,13 @@ public class Topico {
 //    private List<Respuesta> respuestas;
 
 
-
-
+    public Topico(RequestTopicoDTO datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = LocalDateTime.now();
+        this.status = datos.status();
+        this.autor = datos.autor();
+        this.curso = datos.curso();
+        this.respuesta = datos.respuesta();
+    }
 }
