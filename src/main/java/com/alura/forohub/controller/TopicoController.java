@@ -25,7 +25,7 @@ public class TopicoController {
 
     @GetMapping
     public ResponseEntity<Page<ResponseTopicoDTO>>  listarTopicos(@PageableDefault(size = 10, sort = {"titulo"})Pageable paginacion){
-        var page = repository.findAll(paginacion).map(ResponseTopicoDTO::new);
+        var page = repository.findByActivoTrue(paginacion).map(ResponseTopicoDTO::new);
         return ResponseEntity.ok(page);
     } //falta modificar para que solo mueste topicos activos
 
