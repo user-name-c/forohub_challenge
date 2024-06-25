@@ -30,6 +30,7 @@ public class Topico {
     private String autor;
     private String curso;
     private String respuesta;
+    private Boolean activo;
 //    private Usuario autor;
 //    private Curso curso;
 //    private List<Respuesta> respuestas;
@@ -43,5 +44,10 @@ public class Topico {
         this.autor = datos.autor();
         this.curso = datos.curso();
         this.respuesta = datos.respuesta();
+        this.activo = true;
+    }
+
+    public void desactivarTopico() {
+        this.activo = false;
     }
 }
