@@ -1,9 +1,6 @@
 package com.alura.forohub.controller;
 
-import com.alura.forohub.domain.topico.RequestTopicoDTO;
-import com.alura.forohub.domain.topico.ResponseTopicoDTO;
-import com.alura.forohub.domain.topico.Topico;
-import com.alura.forohub.domain.topico.TopicoRepository;
+import com.alura.forohub.domain.topico.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,7 @@ public class TopicoController {
     public ResponseEntity<Page<ResponseTopicoDTO>>  listarTopicos(@PageableDefault(size = 10, sort = {"titulo"})Pageable paginacion){
         var page = repository.findByActivoTrue(paginacion).map(ResponseTopicoDTO::new);
         return ResponseEntity.ok(page);
-    } //falta modificar para que solo mueste topicos activos
+    }
 
     @PostMapping
     public void registrarTopico(@RequestBody @Valid RequestTopicoDTO datos){
@@ -42,6 +39,15 @@ public class TopicoController {
             var topico = repository.getReferenceById(id);
             return ResponseEntity.ok(new ResponseTopicoDTO(topico));
         } return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
+    }
+
+//
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datosActualizarTopico) {
+        Topico topico = repository.getReferenceById(id);
+        topico.actualizarTopico(datosActualizarTopico);
+        return ResponseEntity.ok(new ResponseTopicoDTO(topico));
     }
 
     @DeleteMapping("/{id}")
