@@ -3,23 +3,15 @@ package com.alura.forohub.domain.topico;
 import java.time.LocalDateTime;
 
 public record ResponseTopicoDTO(
+        Long id,
         String titulo,
         String mensaje,
-        LocalDateTime fechaCreacion,
-        String status,
-        String autor,
-        String curso,
-        String respuesta
-
+        LocalDateTime fechaCreacion
 ) {
 
     public ResponseTopicoDTO(Topico topico) {
-        this(topico.getTitulo(), topico.getMensaje(),
-                topico.getFechaCreacion(),
-                topico.getStatus(),
-                topico.getAutor(),
-                topico.getCurso(),
-                topico.getRespuesta()
+        this(topico.getId(), topico.getTitulo(), topico.getMensaje(),
+                topico.getFechaCreacion()
         );
     }
 }

@@ -37,7 +37,7 @@ public class TopicoController {
     public ResponseEntity detallarTopico(@PathVariable Long id) {
         if (repository.existsById(id) && repository.findActivoById(id)){
             var topico = repository.getReferenceById(id);
-            return ResponseEntity.ok(new ResponseTopicoDTO(topico));
+            return ResponseEntity.ok(new ResponseDetallarTopicoDTO(topico));
         } return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
     }
 
