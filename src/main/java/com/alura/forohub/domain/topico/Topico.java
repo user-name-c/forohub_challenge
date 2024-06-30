@@ -3,6 +3,7 @@ package com.alura.forohub.domain.topico;
 //import com.alura.forohub.domain.curso.Curso;
 //import com.alura.forohub.domain.respuesta.Respuesta;
 //import com.alura.forohub.domain.usuario.Usuario;
+import com.alura.forohub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Table(name = "topicos")
 @Entity(name = "topico")
@@ -27,35 +27,36 @@ public class Topico {
     private String mensaje;
     private LocalDateTime fechaCreacion;
     private String status;
-    private String autor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     private String curso;
     private String respuesta;
     private Boolean activo;
-//    private Usuario autor;
 //    private Curso curso;
 //    private List<Respuesta> respuestas;
 
 
-    public Topico(RequestTopicoDTO datos) {
-        this.titulo = datos.titulo();
-        this.mensaje = datos.mensaje();
-        this.fechaCreacion = LocalDateTime.now();
-        this.status = datos.status();
-        this.autor = datos.autor();
-        this.curso = datos.curso();
-        this.respuesta = datos.respuesta();
+    public Topico(String titulo, String mensaje, Usuario usuario, String curso) {
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.fechaCreacion = LocalDateTime.now();;
+        this.status = "1";
+        this.usuario = usuario;
+        this.curso = curso;
         this.activo = true;
     }
+
 
     public void desactivarTopico() {
         this.activo = false;
     }
 
-    public void actualizarTopico(ActualizarTopicoDTO datos) {
-        this.titulo = datos.titulo();
-        this.mensaje = datos.mensaje();
-        this.status = datos.status();
-        this.autor = datos.autor();
-        this.curso = datos.curso();
-    }
+//    public void actualizarTopico(ActualizarTopicoDTO datos) {
+//        this.titulo = datos.titulo();
+//        this.mensaje = datos.mensaje();
+//        this.status = datos.status();
+//        this.usuario = datos.autor();
+//        this.curso = datos.curso();
+//    }
 }

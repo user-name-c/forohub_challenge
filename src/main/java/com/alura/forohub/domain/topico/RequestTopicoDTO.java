@@ -6,7 +6,7 @@ public record RequestTopicoDTO(
         String titulo,
         String mensaje,
         String status,
-        String autor,
+        Long usuarioId,
         String curso,
         String respuesta
 ) {

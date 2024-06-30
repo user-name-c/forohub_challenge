@@ -8,7 +8,7 @@ public record ResponseDetallarTopicoDTO(
         String mensaje,
         LocalDateTime fechaCreacion,
         String status,
-        String autor,
+        Long idUsuario,
         String curso,
         String respuesta
 
@@ -18,7 +18,7 @@ public record ResponseDetallarTopicoDTO(
         this(topico.getId(), topico.getTitulo(), topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),
-                topico.getAutor(),
+                topico.getUsuario().getId(),
                 topico.getCurso(),
                 topico.getRespuesta()
         );
