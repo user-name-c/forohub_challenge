@@ -4,8 +4,10 @@ CREATE TABLE topicos (
     mensaje VARCHAR(300) NOT NULL UNIQUE,
     fecha_creacion VARCHAR(100) NOT NULL,
     status TINYINT,
-    autor VARCHAR(100) NOT NULL,
+    usuario_id bigint NOT NULL,
     curso VARCHAR(100) NOT NULL,
     respuesta VARCHAR(300),
+    activo TINYINT,
+
     PRIMARY KEY (id)
 );
