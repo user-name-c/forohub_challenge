@@ -48,7 +48,7 @@ public class TopicoController {
     @Transactional
     public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datosActualizarTopico) {
         Topico topico = repository.getReferenceById(id);
-//        topico.actualizarTopico(datosActualizarTopico);
+        topico.actualizarTopico(datosActualizarTopico);
         return ResponseEntity.ok(new ResponseTopicoDTO(topico));
     }
 

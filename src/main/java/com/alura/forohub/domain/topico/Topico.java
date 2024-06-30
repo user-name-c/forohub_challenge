@@ -52,11 +52,10 @@ public class Topico {
         this.activo = false;
     }
 
-//    public void actualizarTopico(ActualizarTopicoDTO datos) {
-//        this.titulo = datos.titulo();
-//        this.mensaje = datos.mensaje();
-//        this.status = datos.status();
-//        this.usuario = datos.autor();
-//        this.curso = datos.curso();
-//    }
+    public void actualizarTopico(ActualizarTopicoDTO datos) {
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.status = datos.status();
+        this.curso = datos.curso();
+    }
 }

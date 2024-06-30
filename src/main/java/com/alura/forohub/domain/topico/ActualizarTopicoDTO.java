@@ -6,7 +6,6 @@ public record ActualizarTopicoDTO(
         String titulo,
         String mensaje,
         String status,
-        Long usuarioId,
         String curso
 ) {
 
