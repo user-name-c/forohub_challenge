@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class TopicoController {
 
     @Autowired
+    private AgregarTopicoService service;
+
+    @Autowired
     private TopicoRepository repository;
 
     @GetMapping
@@ -29,8 +32,7 @@ public class TopicoController {
 
     @PostMapping
     public void registrarTopico(@RequestBody @Valid RequestTopicoDTO datos){
-        Topico topico = new Topico(datos);
-        repository.save(topico);
+       service.registrarTopico(datos);
     }
 
     @GetMapping("/{id}")
@@ -46,7 +48,7 @@ public class TopicoController {
     @Transactional
     public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datosActualizarTopico) {
         Topico topico = repository.getReferenceById(id);
-        topico.actualizarTopico(datosActualizarTopico);
+//        topico.actualizarTopico(datosActualizarTopico);
         return ResponseEntity.ok(new ResponseTopicoDTO(topico));
     }
 
