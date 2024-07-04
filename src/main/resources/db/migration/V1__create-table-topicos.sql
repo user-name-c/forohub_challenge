@@ -5,7 +5,7 @@ CREATE TABLE topicos (
     fecha_creacion VARCHAR(100) NOT NULL,
     status TINYINT,
     usuario_id bigint NOT NULL,
-    curso VARCHAR(100) NOT NULL,
+    curso_id bigint NOT NULL,
     respuesta VARCHAR(300),
     activo TINYINT,
 

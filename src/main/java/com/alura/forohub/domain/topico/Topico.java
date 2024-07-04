@@ -3,6 +3,7 @@ package com.alura.forohub.domain.topico;
 //import com.alura.forohub.domain.curso.Curso;
 //import com.alura.forohub.domain.respuesta.Respuesta;
 //import com.alura.forohub.domain.usuario.Usuario;
+import com.alura.forohub.domain.curso.Curso;
 import com.alura.forohub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,14 +31,15 @@ public class Topico {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    private String curso;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
     private String respuesta;
     private Boolean activo;
-//    private Curso curso;
 //    private List<Respuesta> respuestas;
 
 
-    public Topico(String titulo, String mensaje, Usuario usuario, String curso) {
+    public Topico(String titulo, String mensaje, Usuario usuario, Curso curso) {
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.fechaCreacion = LocalDateTime.now();;
@@ -52,10 +54,10 @@ public class Topico {
         this.activo = false;
     }
 
-    public void actualizarTopico(ActualizarTopicoDTO datos) {
-        this.titulo = datos.titulo();
-        this.mensaje = datos.mensaje();
-        this.status = datos.status();
-        this.curso = datos.curso();
+    public void actualizarTopico(String titulo, String mensaje, String status, Curso curso) {
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.status = status;
+        this.curso = curso;
     }
 }

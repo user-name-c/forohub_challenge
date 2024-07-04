@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface CursoRepository extends JpaRepository <Curso, Long> {
     Page<Curso> findByActivoTrue(Pageable paginacion);
-
+    Boolean existsByNombre (String nombre);
     Curso findByNombre(String nombre);
 }

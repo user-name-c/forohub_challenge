@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class TopicoController {
 
     @Autowired
-    private AgregarTopicoService service;
+    private TopicoService service;
 
     @Autowired
     private TopicoRepository repository;
@@ -47,8 +47,7 @@ public class TopicoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datosActualizarTopico) {
-        Topico topico = repository.getReferenceById(id);
-        topico.actualizarTopico(datosActualizarTopico);
+        Topico topico = service.actualizarTopico(id, datosActualizarTopico);
         return ResponseEntity.ok(new ResponseTopicoDTO(topico));
     }
 

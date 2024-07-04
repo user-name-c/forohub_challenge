@@ -1,34 +1,60 @@
 package com.alura.forohub.domain.topico;
 
+import com.alura.forohub.domain.curso.Curso;
+import com.alura.forohub.domain.curso.CursoRepository;
 import com.alura.forohub.domain.usuario.Usuario;
 import com.alura.forohub.domain.usuario.UsuarioRepository;
 import com.alura.forohub.infra.errores.ValidacionDeIntegridad;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
-public class AgregarTopicoService {
+public class TopicoService {
 
 
     @Autowired
     private TopicoRepository topicoRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private CursoRepository cursoRepository;
 
     public void registrarTopico(RequestTopicoDTO datos){
 
         if(!usuarioRepository.findById(datos.usuarioId()).isPresent()){
             throw new ValidacionDeIntegridad("este id para el usuario no fue encontrado");
         }
+        if(!cursoRepository.existsByNombre(datos.curso())){
+            throw new ValidacionDeIntegridad("este curso no fue encontrado");
+        }
 
+        Curso curso = cursoRepository.findByNombre(datos.curso());
         Usuario usuario = usuarioRepository.getReferenceById(datos.usuarioId());
         Topico topico = new Topico(
                 datos.titulo(),
                 datos.mensaje(),
                 usuario,
-                datos.curso()
+                curso
         );
         topicoRepository.save(topico);
+    }
+
+    public Topico actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datos){
+        Topico topico = topicoRepository.getReferenceById(id);
+        if(!cursoRepository.existsByNombre(datos.curso())){
+            throw new ValidacionDeIntegridad("este curso no fue encontrado");
+        }
+        Curso curso = cursoRepository.findByNombre(datos.curso());
+        topico.actualizarTopico(
+                datos.titulo(),
+                datos.mensaje(),
+                datos.status(),
+                curso
+        );
+        return topico;
     }
 
 
