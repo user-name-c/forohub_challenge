@@ -2,6 +2,7 @@ package com.alura.forohub.domain.topico;
 
 import com.alura.forohub.domain.curso.Curso;
 import com.alura.forohub.domain.curso.CursoRepository;
+import com.alura.forohub.domain.topico.validaciones.ValidadorDeTopicos;
 import com.alura.forohub.domain.usuario.Usuario;
 import com.alura.forohub.domain.usuario.UsuarioRepository;
 import com.alura.forohub.infra.errores.ValidacionDeIntegridad;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Service
 public class TopicoService {
@@ -22,6 +25,9 @@ public class TopicoService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @Autowired
+    List<ValidadorDeTopicos> validaciones;
+
     public void registrarTopico(RequestTopicoDTO datos){
 
         if(!usuarioRepository.findById(datos.usuarioId()).isPresent()){
@@ -29,6 +35,10 @@ public class TopicoService {
         }
         if(!cursoRepository.existsByNombre(datos.curso())){
             throw new ValidacionDeIntegridad("este curso no fue encontrado");
+        }
+
+        for (ValidadorDeTopicos validador : validaciones) {
+            validador.validarCrearTopico(datos);
         }
 
         Curso curso = cursoRepository.findByNombre(datos.curso());

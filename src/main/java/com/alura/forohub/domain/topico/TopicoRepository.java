@@ -18,4 +18,7 @@ public interface TopicoRepository extends JpaRepository <Topico, Long>{
             where t.id=:idTopico
             """)
     Boolean findActivoById(Long idTopico);
+
+    boolean existsByTituloAndMensaje(String titulo, String mensaje);
+
 }
