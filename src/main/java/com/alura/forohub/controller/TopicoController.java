@@ -25,7 +25,7 @@ public class TopicoController {
     private TopicoRepository repository;
 
     @GetMapping
-    public ResponseEntity<Page<ResponseTopicoDTO>>  listarTopicos(@PageableDefault(size = 10, sort = {"titulo"})Pageable paginacion){
+    public ResponseEntity<Page<ResponseTopicoDTO>>  listarTopicos(@PageableDefault(size = 10, sort = {"fechaCreacion"})Pageable paginacion){
         var page = repository.findByActivoTrue(paginacion).map(ResponseTopicoDTO::new);
         return ResponseEntity.ok(page);
     }
