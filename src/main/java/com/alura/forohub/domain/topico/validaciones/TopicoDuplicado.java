@@ -2,6 +2,7 @@ package com.alura.forohub.domain.topico.validaciones;
 
 import com.alura.forohub.domain.topico.RequestTopicoDTO;
 import com.alura.forohub.domain.topico.TopicoRepository;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class TopicoDuplicado implements ValidadorDeTopicos{
     public void validarTopico(String titulo, String mensaje) {
 
         if (repositorio.existsByTituloAndMensaje(titulo, mensaje)){
-            throw new IllegalArgumentException("Este topico ya existe");
+            throw new ValidationException("Este topico ya existe");
         }
 
     }
