@@ -13,9 +13,9 @@ public class TopicoDuplicado implements ValidadorDeTopicos{
     private TopicoRepository repositorio;
 
     @Override
-    public void validarCrearTopico(RequestTopicoDTO datos) {
+    public void validarTopico(String titulo, String mensaje) {
 
-        if (repositorio.existsByTituloAndMensaje(datos.titulo(), datos.mensaje())){
+        if (repositorio.existsByTituloAndMensaje(titulo, mensaje)){
             throw new IllegalArgumentException("Este topico ya existe");
         }
 

@@ -38,7 +38,7 @@ public class TopicoService {
         }
 
         for (ValidadorDeTopicos validador : validaciones) {
-            validador.validarCrearTopico(datos);
+            validador.validarTopico(datos.titulo(), datos.mensaje());
         }
 
         Curso curso = cursoRepository.findByNombre(datos.curso());
@@ -56,6 +56,9 @@ public class TopicoService {
         Topico topico = topicoRepository.getReferenceById(id);
         if(!cursoRepository.existsByNombre(datos.curso())){
             throw new ValidacionDeIntegridad("este curso no fue encontrado");
+        }
+        for (ValidadorDeTopicos validador : validaciones) {
+            validador.validarTopico(datos.titulo(), datos.mensaje());
         }
         Curso curso = cursoRepository.findByNombre(datos.curso());
         topico.actualizarTopico(
