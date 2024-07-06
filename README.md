@@ -3,6 +3,8 @@
 ## Descripción
 El challenge Foro Hub consiste en una API REST para la gestión de un foro que permite la creación de dudas llamadas tópicos. De acuerdo al challenge del programa Oracle Next Education y AluraLatam, el foro es un espacio donde todos los participantes de una plataforma pueden plantear sus preguntas sobre determinados tópicos.
 
+![Insignia Spring](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/Badge-Spring.png)
+
 ## Características
 - La API se centra específicamente en los tópicos y permite realizar las operaciones CRUD: Crear, Consultar, Actualizar y Eliminar tópicos.
 - Los datos se guardan en una base de datos relacional llamada `foro_hub` para la persistencia de la información, la cual incluye las siguientes tablas:
@@ -34,6 +36,37 @@ El challenge Foro Hub consiste en una API REST para la gestión de un foro que p
 - `spring-boot-starter-test`: Para pruebas unitarias y de integración.
 - `spring-security-test`: Para pruebas de seguridad.
 - `java-jwt`: Para trabajar con JSON Web Tokens.
+
+## Imágenes
+### Autenticación exitosa
+![Autenticación](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/autenticacion.png)
+
+### Eliminación de un tópico
+![Eliminar Tópico](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/eliminar_topico.png)
+
+### Modificación del título de un tópico
+![Modificar Título](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/modificar_titulo.png)
+
+### Error de autenticación
+![Error de Autenticación](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/error_autenticacion.png)
+
+### Registro exitoso de un tópico
+![Registrar Tópico Correcto](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/registrar_topico_ok.png)
+
+### Intento de inicio de sesión fallido
+![Bad Login](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/bad_loging.png)
+
+### Error de recurso no encontrado
+![Error Not Found](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/error_not_found.png)
+
+### Tópico duplicado
+![Tópico Duplicado](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/topico_duplicado.png)
+
+### Detalle de un tópico
+![Detallar Tópico](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/detallar_topico.png)
+
+### Listado de tópicos
+![Listar Tópicos](https://github.com/user-name-c/forohub_challenge/blob/master/imagenes/listar_topicos.png)
 
 
 ## Instalación y Ejecución
