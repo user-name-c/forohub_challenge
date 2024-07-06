@@ -31,8 +31,9 @@ public class TopicoController {
     }
 
     @PostMapping
-    public void registrarTopico(@RequestBody @Valid RequestTopicoDTO datos){
-       service.registrarTopico(datos);
+    public ResponseEntity registrarTopico(@RequestBody @Valid RequestTopicoDTO datos){
+      var topico = service.registrarTopico(datos);
+      return ResponseEntity.ok(new ResponseDetallarTopicoDTO(topico));
     }
 
     @GetMapping("/{id}")

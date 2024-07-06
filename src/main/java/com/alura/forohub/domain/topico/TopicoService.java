@@ -28,7 +28,7 @@ public class TopicoService {
     @Autowired
     List<ValidadorDeTopicos> validaciones;
 
-    public void registrarTopico(RequestTopicoDTO datos){
+    public Topico registrarTopico(RequestTopicoDTO datos){
 
         if(!usuarioRepository.findById(datos.usuarioId()).isPresent()){
             throw new ValidacionDeIntegridad("este id para el usuario no fue encontrado");
@@ -50,6 +50,8 @@ public class TopicoService {
                 curso
         );
         topicoRepository.save(topico);
+
+        return topico;
     }
 
     public Topico actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datos){
