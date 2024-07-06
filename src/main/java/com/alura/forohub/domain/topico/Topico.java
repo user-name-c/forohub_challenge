@@ -4,6 +4,7 @@ package com.alura.forohub.domain.topico;
 //import com.alura.forohub.domain.respuesta.Respuesta;
 //import com.alura.forohub.domain.usuario.Usuario;
 import com.alura.forohub.domain.curso.Curso;
+import com.alura.forohub.domain.respuesta.Respuesta;
 import com.alura.forohub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "topicos")
 @Entity(name = "topico")
@@ -34,7 +36,8 @@ public class Topico {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
     private Curso curso;
-    private String respuesta;
+    @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
+    private List<Respuesta> respuestas;
     private Boolean activo;
 //    private List<Respuesta> respuestas;
 
