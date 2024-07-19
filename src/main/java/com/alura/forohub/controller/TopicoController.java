@@ -21,12 +21,10 @@ public class TopicoController {
     @Autowired
     private TopicoService service;
 
-    @Autowired
-    private TopicoRepository repository;
 
     @GetMapping
     public ResponseEntity<Page<ResponseTopicoDTO>>  listarTopicos(@PageableDefault(size = 10, sort = {"fechaCreacion"})Pageable paginacion){
-        var page = repository.findByActivoTrue(paginacion).map(ResponseTopicoDTO::new);
+        var page = service.listarTopicos(paginacion);
         return ResponseEntity.ok(page);
     }
 
@@ -38,10 +36,8 @@ public class TopicoController {
 
     @GetMapping("/{id}")
     public ResponseEntity detallarTopico(@PathVariable Long id) {
-        if (repository.existsById(id) && repository.findActivoById(id)){
-            var topico = repository.getReferenceById(id);
-            return ResponseEntity.ok(new ResponseDetallarTopicoDTO(topico));
-        } return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
+            var response = service.detallarTopico(id);
+        return response.getStatusCode().is2xxSuccessful() ? ResponseEntity.ok(response.getBody()) : ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
     }
 
 //
@@ -55,12 +51,9 @@ public class TopicoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarTopico(@PathVariable Long id) {
-        if (repository.existsById(id) && repository.findActivoById(id)){
-            //Delete logico
-            Topico topico = repository.getReferenceById(id);
-            topico.desactivarTopico();
-            return ResponseEntity.noContent().build();
-        } return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
+        var response = service.eliminarTopico(id);
+        return response.getStatusCode().is2xxSuccessful() ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
+
     }
 
 }

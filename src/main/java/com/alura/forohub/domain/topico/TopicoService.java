@@ -8,8 +8,12 @@ import com.alura.forohub.domain.usuario.UsuarioRepository;
 import com.alura.forohub.infra.errores.ValidacionDeIntegridad;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -27,6 +31,10 @@ public class TopicoService {
 
     @Autowired
     List<ValidadorDeTopicos> validaciones;
+
+    public Page<ResponseTopicoDTO> listarTopicos(Pageable paginacion) {
+        return topicoRepository.findByActivoTrue(paginacion).map(ResponseTopicoDTO::new);
+    }
 
     public Topico registrarTopico(RequestTopicoDTO datos){
 
@@ -70,6 +78,24 @@ public class TopicoService {
                 curso
         );
         return topico;
+    }
+
+    public ResponseEntity<Object> detallarTopico(Long id) {
+        if (topicoRepository.existsById(id) && topicoRepository.findActivoById(id)) {
+            var topico = topicoRepository.getReferenceById(id);
+            return ResponseEntity.ok(new ResponseDetallarTopicoDTO(topico));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
+    }
+
+    public ResponseEntity<Object> eliminarTopico(Long id) {
+        if (topicoRepository.existsById(id) && topicoRepository.findActivoById(id)) {
+            Topico topico = topicoRepository.getReferenceById(id);
+            topico.desactivarTopico();
+            topicoRepository.save(topico);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
     }
 
 
