@@ -30,6 +30,13 @@ public class Usuario implements UserDetails {
     private Boolean activo;
 
 
+    public Usuario (String nombre, String correoElectronico, String contrasena){
+        this.nombre = nombre;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
+        this.activo = true;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
