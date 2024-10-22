@@ -30,4 +30,20 @@ public class Respuesta {
     private LocalDateTime fechaCreacion;
     private Usuario autor;
     private Boolean solucion;
+
+    public Respuesta(String mensaje, Topico topico, Usuario autor){
+        this.mensaje = mensaje;
+        this.topico = topico;
+        this.fechaCreacion = LocalDateTime.now();
+        this.autor = autor;
+        this.solucion = false;
+    }
+
+    public void marcarComoSolucion(){
+        this.solucion = true;
+    }
+
+    public void actualizarRespuesta(String mensaje){
+            this.mensaje = mensaje;
+    }
 }
