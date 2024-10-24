@@ -44,8 +44,7 @@ public class TopicoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datosActualizarTopico, @RequestHeader("Authorization") String authHeader) {
-        String token = authHeader.replace("Bearer ", "");
-        Topico topico = service.actualizarTopico(id, datosActualizarTopico, token);
+        Topico topico = service.actualizarTopico(id, datosActualizarTopico, authHeader);
         return ResponseEntity.ok(new ResponseTopicoDTO(topico));
     }
 

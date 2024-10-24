@@ -58,10 +58,11 @@ public class TokenService {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }
 
-    public Long obtenerIdUsuario(String token) {
-        if (token == null) {
+    public Long obtenerIdUsuario(String authHeader) {
+        if (authHeader == null) {
             throw new RuntimeException("El token es nulo.");
         }
+        String token = extractToken(authHeader);
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             DecodedJWT decodedJWT = JWT.require(algorithm)
@@ -74,6 +75,13 @@ public class TokenService {
         } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token inválido o manipulado: " + exception.getMessage());
         }
+    }
+
+    public String extractToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.replace("Bearer ", "");
+        }
+        throw new IllegalArgumentException("Invalid Authorization header.");
     }
 
 }
