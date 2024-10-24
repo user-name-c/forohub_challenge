@@ -6,6 +6,7 @@ import com.alura.forohub.domain.topico.validaciones.ValidadorDeTopicos;
 import com.alura.forohub.domain.usuario.Usuario;
 import com.alura.forohub.domain.usuario.UsuarioRepository;
 import com.alura.forohub.infra.errores.ValidacionDeIntegridad;
+import com.alura.forohub.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,8 @@ public class TopicoService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private CursoRepository cursoRepository;
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     List<ValidadorDeTopicos> validaciones;
@@ -62,8 +65,15 @@ public class TopicoService {
         return topico;
     }
 
-    public Topico actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datos){
+    public Topico actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datos, String token){
+
+        // Obtener el ID del usuario desde el token
+        Long usuarioId = tokenService.obtenerIdUsuario(token);
+
         Topico topico = topicoRepository.getReferenceById(id);
+        if (!topico.getUsuario().getId().equals(usuarioId)) {
+            throw new SecurityException("No tienes permiso para modificar este tópico.");
+        }
         if(!cursoRepository.existsByNombre(datos.curso())){
             throw new ValidacionDeIntegridad("este curso no fue encontrado");
         }

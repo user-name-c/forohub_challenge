@@ -58,4 +58,22 @@ public class TokenService {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
     }
 
+    public Long obtenerIdUsuario(String token) {
+        if (token == null) {
+            throw new RuntimeException("El token es nulo.");
+        }
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            DecodedJWT decodedJWT = JWT.require(algorithm)
+                    .withIssuer("Foro Hub")
+                    .build()
+                    .verify(token);
+
+            // Extraer el ID del claim "id"
+            return decodedJWT.getClaim("id").asLong();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Token inválido o manipulado: " + exception.getMessage());
+        }
+    }
+
 }
