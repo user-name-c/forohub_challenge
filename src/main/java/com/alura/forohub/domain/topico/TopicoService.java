@@ -67,13 +67,9 @@ public class TopicoService {
 
     public Topico actualizarTopico(@PathVariable Long id, @RequestBody @Valid ActualizarTopicoDTO datos, String token){
 
-        // Obtener el ID del usuario desde el token
-        Long usuarioId = tokenService.obtenerIdUsuario(token);
 
         Topico topico = topicoRepository.getReferenceById(id);
-        if (!topico.getUsuario().getId().equals(usuarioId)) {
-            throw new SecurityException("No tienes permiso para modificar este tópico.");
-        }
+        validaPermisoDeUsuario(token,  topico);
         if(!cursoRepository.existsByNombre(datos.curso())){
             throw new ValidacionDeIntegridad("este curso no fue encontrado");
         }
@@ -98,9 +94,10 @@ public class TopicoService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
     }
 
-    public ResponseEntity<Object> eliminarTopico(Long id) {
+    public ResponseEntity<Object> eliminarTopico(Long id, String token) {
         if (topicoRepository.existsById(id) && topicoRepository.findActivoById(id)) {
             Topico topico = topicoRepository.getReferenceById(id);
+            validaPermisoDeUsuario(token,  topico);
             topico.desactivarTopico();
             topicoRepository.save(topico);
             return ResponseEntity.noContent().build();
@@ -108,6 +105,13 @@ public class TopicoService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
     }
 
+    public void validaPermisoDeUsuario(String token, Topico topico){
+        Long usuarioId = tokenService.obtenerIdUsuario(token);
+
+        if (!topico.getUsuario().getId().equals(usuarioId)) {
+            throw new SecurityException("No tienes permiso para modificar este tópico.");
+        }
+    }
 
     //    public Topico(RequestTopicoDTO datos) {
 //        this.titulo = datos.titulo();

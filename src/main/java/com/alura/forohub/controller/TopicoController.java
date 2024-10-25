@@ -50,8 +50,8 @@ public class TopicoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity eliminarTopico(@PathVariable Long id) {
-        var response = service.eliminarTopico(id);
+    public ResponseEntity eliminarTopico(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        var response = service.eliminarTopico(id, authHeader);
         return response.getStatusCode().is2xxSuccessful() ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe el tópico solicitado o fue borrado");
 
     }
